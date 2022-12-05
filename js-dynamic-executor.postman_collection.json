@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "87faab3d-a9ee-4698-8de3-db6b491bdeb4",
+		"name": "JS dynamic executor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "run",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"average should be equals 7\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.average).to.eql(7);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"command\": {\r\n        \"code\": \"CALC1\",\r\n        \"script\": \"const average = obj.grades.reduce((a, b) => a + b, 0) / obj.grades.length; return { ...obj, average };\"\r\n    },\r\n    \"query\": {\r\n        \"code\": \"QUERY1\",\r\n        \"script\": \"const student = await db.collection('student').findOne({name: obj.name}); if (student) { return student } throw {'error': `${obj.name} student not found!`};\",\r\n        \"content\": {\r\n            \"name\": \"Brian\"\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/v1/run",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"v1",
+						"run"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
