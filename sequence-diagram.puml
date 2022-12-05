@@ -1,0 +1,23 @@
+@startuml JS code snippet executor
+    
+actor       "orchestrator" as orchestrator
+participant "executor"     as executor
+database    "db"           as db
+
+activate orchestrator
+orchestrator -> executor : Http request to path '/v1/run'
+
+activate executor
+executor -> db : Run the "query" code snippet
+deactivate
+
+activate db
+db --> executor : Return data to run command
+deactivate
+
+activate executor
+executor -> executor : Run the "command" code snippet
+executor --> orchestrator : Http response with status code (200)
+deactivate
+
+@enduml
